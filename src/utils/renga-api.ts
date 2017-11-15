@@ -106,14 +106,16 @@ export function getContext(contextUUID: string) {
         })
 }
 
-export function runContext(engine: string, namespace: string, contextUUID: string, environment?: object) {
+export function runContext(engine: string, namespace: string, contextUUID: string,
+                           { environment = null, interactive = false} ) {
 
-    let payload = {
+    let body = {
         engine: engine,
         namespace: namespace,
+        interactive: interactive
     }
 
-    if (environment) payload['environment'] = environment
+    if (environment) body['environment'] = environment
 
     return fetch(`./api/deployer/contexts/${contextUUID}/executions`,
         {
@@ -122,7 +124,7 @@ export function runContext(engine: string, namespace: string, contextUUID: strin
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(body)
         }
     )
 }

@@ -36,7 +36,7 @@
         <execution-dialog
                 v-on:success="success"
                 v-on:cancel="cancel"
-                v-bind:contextUUID="selectedVertex.self.UUID">
+                v-bind:contextUUID="selectedVertex.self">
         </execution-dialog>
     </v-dialog>
     <v-dialog v-model="dialog" v-if="dialog === 'bucket'">
