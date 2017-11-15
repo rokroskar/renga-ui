@@ -225,10 +225,18 @@ export class ExecutionDialogComponent extends DeployerDialogComponent {
     engine: string = ''
     namespace: string = ''
     contextUUID: string
+    interactiveOption: boolean = false
+    interactive: boolean = false
+    ports: string[] = []
 
     @Watch('projectId')
     onProjectIdChanged() {
         this.getFiles()
+    }
+
+    @Watch('engine')
+    onPortsEngineChange(newEngine) {
+        this.interactiveOption = newEngine === 'k8s' && this.ports.length > 0
     }
 
     mounted() {
@@ -248,6 +256,7 @@ export class ExecutionDialogComponent extends DeployerDialogComponent {
 
                 this.inputSlotFiles = this.inputSlotNames.map(() => null)
                 this.outputSlotFiles = this.outputSlotNames.map(() => null)
+                this.ports = context.spec.ports
             })
     }
 
